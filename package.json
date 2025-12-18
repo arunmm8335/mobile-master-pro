@@ -8,7 +8,9 @@
     "dev:frontend": "vite",
     "dev:backend": "nodemon --exec tsx server/index.ts",
     "seed": "tsx server/seed.ts",
-    "build": "vite build",
+    "build": "tsc && vite build",
+    "build:backend": "tsc",
+    "start": "node dist/server/index.js",
     "preview": "vite preview"
   },
   "dependencies": {
