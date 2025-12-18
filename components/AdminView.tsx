@@ -516,6 +516,10 @@ const ProductsManagement: React.FC<{
                   <option value="phone">Phone</option>
                   <option value="accessory">Accessory</option>
                   <option value="tablet">Tablet</option>
+                  <option value="charger">Charger</option>
+                  <option value="case">Case</option>
+                  <option value="earphones">Earphones</option>
+                  <option value="smartwatch">Smartwatch</option>
               </select>
             </div>
 
