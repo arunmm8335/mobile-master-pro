@@ -2,9 +2,10 @@ import { GoogleGenAI, Chat } from "@google/genai";
 import { ChatMessage, Product } from "../types";
 import { MOCK_PRODUCTS } from "../constants";
 
-// Initialize Gemini
+// Initialize Gemini only if API key is available
 // NOTE: In a real production app, ensure API keys are handled securely via backend proxy if possible.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const apiKey = import.meta.env?.VITE_GEMINI_API_KEY || '';
+const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 
 // System instruction to give the AI context about the inventory and its role.
 const SYSTEM_INSTRUCTION = `
@@ -25,6 +26,11 @@ let chatSession: Chat | null = null;
 
 export const getChatResponse = async (userMessage: string): Promise<string> => {
   try {
+    // Return fallback if AI not configured
+    if (!ai) {
+      return "Chat support is currently unavailable. Please contact us directly for assistance.";
+    }
+    
     if (!chatSession) {
       chatSession = ai.chats.create({
         model: 'gemini-2.5-flash',
