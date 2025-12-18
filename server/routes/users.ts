@@ -110,14 +110,16 @@ router.put('/:id', async (req: Request, res: Response) => {
     const result = await db.collection<User>('users').findOneAndUpdate(
       { id: req.params.id },
       { $set: updateData },
-      { returnDocument: 'after', projection: { password: 0 } }
+      { returnDocument: 'after' }
     );
     
-    if (!result) {
+    if (!result.value) {
       return res.status(404).json({ error: 'User not found' });
     }
     
-    res.json(result);
+    // Remove password before sending
+    const { password, ...userWithoutPassword } = result.value;
+    res.json(userWithoutPassword);
   } catch (error) {
     console.error('Error updating user:', error);
     res.status(500).json({ error: 'Failed to update user' });

@@ -45,15 +45,20 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ user, onUpdate }) => {
         profileImage,
       };
       
+      console.log('Updating profile with data:', updatedUser);
+      
       // Save to database
-      await db.updateUserProfile(updatedUser);
+      const response = await db.updateUserProfile(updatedUser);
+      console.log('Profile update response:', response);
       
       // Update local session
       onUpdate();
       setEditing(false);
+      alert('Profile updated successfully!');
     } catch (error) {
       console.error('Error updating profile:', error);
-      alert('Failed to update profile');
+      const errorMessage = error instanceof Error ? error.message : 'Failed to update profile';
+      alert(`Error: ${errorMessage}`);
     } finally {
       setSaving(false);
     }
