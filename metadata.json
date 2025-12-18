@@ -1,0 +1,5 @@
+{
+  "name": "MobileMaster Pro",
+  "description": "A professional mobile shop application featuring an AI-powered sales assistant, dynamic product catalog, and instant trade-in value estimator using Gemini API.",
+  "requestFramePermissions": []
+}
