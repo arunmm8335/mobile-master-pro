@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: mobilemaster-pro-api
+    env: node
+    buildCommand: npm install && npx tsc
+    startCommand: node dist/server/index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
