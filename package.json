@@ -9,7 +9,7 @@
     "dev:backend": "nodemon --exec tsx server/index.ts",
     "seed": "tsx server/seed.ts",
     "build": "tsc && vite build",
-    "build:backend": "tsc",
+    "build:backend": "tsc -p tsconfig.server.json",
     "start": "node dist/server/index.js",
     "preview": "vite preview"
   },

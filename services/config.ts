@@ -1,8 +1,12 @@
 // API URL Configuration
-// In production, use the environment variable VITE_API_URL
-// In development, use local server
-export const API_URL = import.meta.env.PROD 
-  ? import.meta.env.VITE_API_URL || 'https://your-backend.onrender.com'
+// This file is only used in the frontend (browser)
+// @ts-ignore - import.meta.env is available in Vite
+const isProd = import.meta.env?.PROD || false;
+// @ts-ignore
+const apiUrl = import.meta.env?.VITE_API_URL || '';
+
+export const API_URL = isProd && apiUrl
+  ? apiUrl
   : 'http://localhost:3001';
 
 // For API endpoints, append /api

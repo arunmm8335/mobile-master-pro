@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { User, Camera, Mail, Phone, MapPin, Save, Upload, X } from 'lucide-react';
+import { User as UserIcon, Camera, Mail, Phone, MapPin, Save, Upload, X } from 'lucide-react';
 import { db } from '../services/db';
+import type { User } from '../types';
 
 interface ProfileViewProps {
   user: User;
@@ -225,7 +226,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ user, onUpdate }) => {
                   Full Name
                 </label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+                  <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                   <input
                     type="text"
                     value={formData.name}
