@@ -1,7 +1,5 @@
 import { Order, Product, User } from '../types';
-
-// API Base URL - using relative path to leverage Vite proxy
-const API_URL = '/api';
+import { API_BASE } from './config';
 
 // Session storage key
 const DB_SESSION_KEY = 'mmp_session';
@@ -9,7 +7,7 @@ const DB_SESSION_KEY = 'mmp_session';
 class DatabaseService {
   private async fetchAPI(endpoint: string, options?: RequestInit) {
     try {
-      const response = await fetch(`${API_URL}${endpoint}`, {
+      const response = await fetch(`${API_BASE}${endpoint}`, {
         ...options,
         headers: {
           'Content-Type': 'application/json',
