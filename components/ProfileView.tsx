@@ -25,9 +25,47 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ user, onUpdate }) => {
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      // Check file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('Image size must be less than 5MB');
+        return;
+      }
+
       const reader = new FileReader();
       reader.onloadend = () => {
-        setProfileImage(reader.result as string);
+        const img = new Image();
+        img.onload = () => {
+          // Create canvas to resize image
+          const canvas = document.createElement('canvas');
+          const MAX_WIDTH = 400;
+          const MAX_HEIGHT = 400;
+          let width = img.width;
+          let height = img.height;
+
+          // Calculate new dimensions
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx?.drawImage(img, 0, 0, width, height);
+
+          // Convert to base64 with compression
+          const compressedImage = canvas.toDataURL('image/jpeg', 0.7);
+          console.log('Original size:', (reader.result as string).length, 'Compressed:', compressedImage.length);
+          setProfileImage(compressedImage);
+        };
+        img.src = reader.result as string;
       };
       reader.readAsDataURL(file);
     }

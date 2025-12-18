@@ -126,7 +126,18 @@ class DatabaseService {
       method: 'PUT',
       body: JSON.stringify(user),
     });
-    localStorage.setItem(DB_SESSION_KEY, JSON.stringify(updatedUser));
+    
+    // Store complete user data in localStorage including profileImage
+    // Note: Large images might cause quota issues, but we'll handle gracefully
+    try {
+      localStorage.setItem(DB_SESSION_KEY, JSON.stringify(updatedUser));
+    } catch (e) {
+      // If quota exceeded, store without profile image
+      console.warn('LocalStorage quota exceeded, storing without profile image');
+      const { profileImage, ...userWithoutImage } = updatedUser;
+      localStorage.setItem(DB_SESSION_KEY, JSON.stringify(userWithoutImage));
+    }
+    
     return updatedUser;
   }
 

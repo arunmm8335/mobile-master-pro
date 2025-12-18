@@ -93,6 +93,16 @@ router.put('/:id', async (req: Request, res: Response) => {
     const db = getDB();
     const { name, email, phone, address, city, state, pincode, profileImage } = req.body;
     
+    console.log('Updating user:', req.params.id);
+    console.log('Update data received:', { name, email, phone, address, city, state, pincode, imageSize: profileImage?.length });
+    
+    // First, check if user exists
+    const existingUser = await db.collection<User>('users').findOne({ id: req.params.id });
+    console.log('Existing user found:', existingUser ? 'yes' : 'no');
+    if (existingUser) {
+      console.log('Existing user data:', { id: existingUser.id, name: existingUser.name, email: existingUser.email });
+    }
+    
     const updateData: any = {
       name,
       email,
@@ -107,22 +117,29 @@ router.put('/:id', async (req: Request, res: Response) => {
     if (pincode !== undefined) updateData.pincode = pincode;
     if (profileImage !== undefined) updateData.profileImage = profileImage;
     
-    const result = await db.collection<User>('users').findOneAndUpdate(
+    // Update the user
+    await db.collection<User>('users').updateOne(
       { id: req.params.id },
-      { $set: updateData },
-      { returnDocument: 'after' }
+      { $set: updateData }
     );
     
-    if (!result.value) {
+    // Fetch the updated user
+    const updatedUser = await db.collection<User>('users').findOne(
+      { id: req.params.id },
+      { projection: { password: 0 } }
+    );
+    
+    if (!updatedUser) {
+      console.error('User not found after update:', req.params.id);
       return res.status(404).json({ error: 'User not found' });
     }
     
-    // Remove password before sending
-    const { password, ...userWithoutPassword } = result.value;
-    res.json(userWithoutPassword);
-  } catch (error) {
+    console.log('User updated successfully:', updatedUser.id);
+    res.json(updatedUser);
+  } catch (error: any) {
     console.error('Error updating user:', error);
-    res.status(500).json({ error: 'Failed to update user' });
+    console.error('Error stack:', error.stack);
+    res.status(500).json({ error: 'Failed to update user', details: error.message });
   }
 });
 
