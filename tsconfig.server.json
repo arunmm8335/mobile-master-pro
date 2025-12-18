@@ -14,5 +14,5 @@
     "types": ["node"]
   },
   "include": ["server/**/*"],
-  "exclude": ["node_modules", "dist", "components", "services", "context", "*.tsx", "*.ts", "vite.config.ts"]
+  "exclude": ["node_modules", "dist", "components", "services", "context", "constants.ts", "*.tsx", "index.tsx", "App.tsx", "vite.config.ts"]
 }
