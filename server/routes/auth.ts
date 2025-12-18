@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
-import { getDB } from '../db';
-import { User } from '../models/types';
+import { getDB } from '../db.js';
+import { User } from '../models/types.js';
 
 const router = Router();
 

@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
-import { getDB } from '../db';
-import { Seller, User } from '../models/types';
+import { getDB } from '../db.js';
+import { Seller, User } from '../models/types.js';
 
 const router = Router();
 

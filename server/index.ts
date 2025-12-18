@@ -1,16 +1,16 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { connectDB } from './db';
-import productRoutes from './routes/products';
-import userRoutes from './routes/users';
-import authRoutes from './routes/auth';
-import paymentRoutes from './routes/payment';
-import uploadRoutes from './routes/upload';
-import orderRoutes from './routes/orders';
-import sellerRoutes from './routes/sellers';
-import deliveryRoutes from './routes/delivery';
-import reviewRoutes from './routes/reviews';
+import { connectDB } from './db.js';
+import productRoutes from './routes/products.js';
+import userRoutes from './routes/users.js';
+import authRoutes from './routes/auth.js';
+import paymentRoutes from './routes/payment.js';
+import uploadRoutes from './routes/upload.js';
+import orderRoutes from './routes/orders.js';
+import sellerRoutes from './routes/sellers.js';
+import deliveryRoutes from './routes/delivery.js';
+import reviewRoutes from './routes/reviews.js';
 
 dotenv.config();
 
